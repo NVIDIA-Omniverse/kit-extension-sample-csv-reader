@@ -41,11 +41,11 @@ In this guide, we will learn how to:
 
 <a name="part1"></a>
 ## 1. Download the Starter Project
-To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `sample-kit-extension-csv` [github repository to update](link WARNING TBD). 
+To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-read` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader). 
 
-`git clone -b tutorial-start https://github.com/NVIDIA-Omniverse/sample-kit-extension-csv.git' (WARNING Final Naming TBD)
+`git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)' 
 
-This tutorial will focus on the `models.py` file found in the`exts/omni.sample.csv/omni/sample/csv/` (WARNING TBD) directory.
+This tutorial will focus on the `models.py` file found in the`exts/omni.csv.reader/omni/csv/reader/`  directory.
  To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/).
 
 In particular, we will be focusing on the function `Generate`. Its workflow is defined as such:
