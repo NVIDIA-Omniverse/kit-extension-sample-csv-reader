@@ -33,3 +33,8 @@ How to use it in OV:
 Known limitations :
 ------------------
 All limitations are due to the fact this is to be used as one training sample
+
+
+## Contributing
+The source code for this repository is provided as-is and we are not accepting outside contributions.
+
