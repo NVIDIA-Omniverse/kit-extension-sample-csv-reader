@@ -41,7 +41,7 @@ In this guide, we will learn how to:
 
 <a name="part1"></a>
 ## 1. Download the Starter Project
-To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-read` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader). 
+To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-reader` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader). 
 
 `git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)' 
 
