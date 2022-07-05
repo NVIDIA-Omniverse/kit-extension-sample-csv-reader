@@ -45,6 +45,15 @@ To get the assets for this hands-on lab, please clone the `tutorial-start` branc
 
 `git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)' 
 
+To load the extension, one possible way :
+* in the extension tab, click on the _gear wheel_
+* in the _extension search path_, add the path to the folder where you cloned the git repository
+* afterwards, if you search for **CSV** in the extension tab, that one should then appear...
+
+<p align="center">
+    <img src="images/LoadExt.png">
+<p>
+
 This tutorial will focus on the `models.py` file found in the`exts/omni.csv.reader/omni/csv/reader/`  directory.
  To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/).
 
