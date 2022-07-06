@@ -64,26 +64,51 @@ In particular, we will be focusing on the function `Generate`. Its workflow is d
 ```python
         def Generate(self):
                 
-                # Creating a new stage (clean,Up axis, unit, add light)
-                ...
-                # check that CSV exists and Read it
-                ...
-                    ...
+                # Stage 2
+                def Generate(self):
+        
+                # Clear the stage
+
+                # create a new stage with Y up and in meters
+
+                #  set the up axis
+
+                #  set the unit of the world
+
+                # define the root prim
+
+                # Define the root prim as the default
+
+                # add a light
+        
+                # Stage 3 (3.2)
+                # check that CSV exists
+
+                    # Read CSV file
+
                         #Iterate over each row in the CSV file
-                            ...
+                        #   Skip the header row
+                        #   Don't read more than the max number of elements
+                        #   Create the shape with the appropriate color at each coordinate
+
                             #Read data from the next row
-                            ...
-                            # create the prim cluster path (grouped or not)
-                            ...
-                            #create the prim 
-                            ...
+
+                            # create the prim cluster path
+
+                            # add group to path if the user has selected that option
+
+                            #create the prim if it does not exist
+
                             #Create first reference prim
-                            ...
-                            #Create instance to reference prim 
-                            ...                
-                            #Set location and/Or Color
-                            ...
-                            #Set Color                     
+
+                            #Create instance to reference prim
+
+                            #Get mesh from shape instance
+
+                            #Set location
+
+                            #Set Color
+    
 ```           
 > 📝 **Note:**  CSV Sample Files (2) to be read and default shapes to be used as references, are provided within the _data_ folder of this extension
 
