@@ -12,7 +12,7 @@ some elements to be placed in a 3D environment, as well a cluster column (repres
 In this guide, we will learn how to:
 * open a CSV file and read it
 * place one shape at X,Y,Z position given by the CSV File
-* shape coming as a reference - with position and color given my information retrieved from the CSV file
+* shape coming as a reference - with position and color given by data retrieved from the CSV file
 
 <p align="center">
     <img src="images/OV_CSVReader_WhatToExpect.png">
