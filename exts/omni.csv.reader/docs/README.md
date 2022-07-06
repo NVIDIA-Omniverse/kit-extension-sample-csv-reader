@@ -22,11 +22,10 @@ Omniverse Kit extensions. [Get started with the tutorial.](../../../tutorial/tut
 
 ### Workflow using the extension:
 
-[opt] : in the parameters UI window, select the location of your CSV, the type of shape, and if you want to be grouped by class/_cluster_...
-
 click on 'Generate' -> that will create elements here and there based on the info from the CSV file
 
-if required : you can export/save the USD stage with the 'file->Save As...' option.
-
-NB: that scene is reset everytime you press on Generate.
+NB:
+1 [opt] : in the parameters UI window, select the location of your CSV, the type of shape, and if you want to be grouped by class/_cluster_...
+2 if required : you can export/save the USD stage with the 'file->Save As...' option.
+3 the scene is reset everytime you press on Generate.
 
