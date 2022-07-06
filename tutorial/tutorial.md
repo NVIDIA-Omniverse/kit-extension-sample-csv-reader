@@ -109,7 +109,8 @@ In particular, we will be focusing on the function `Generate`. Its workflow is d
                             #Get mesh from shape instance
 
                             #Set location
-
+                            
+                            # Stage 5 (5.2)
                             #Set Color
     
 ```           
