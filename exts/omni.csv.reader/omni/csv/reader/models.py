@@ -114,7 +114,8 @@ class MainModel():
                     y = float(row[2])
                     z = float(row[3])
                     cluster = row[4]
-
+                    
+                    # root prim
                     primClusterUrl = self.rootUrl
 
                     # add group to path if the user has selected that option
