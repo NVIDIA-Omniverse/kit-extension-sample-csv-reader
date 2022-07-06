@@ -222,6 +222,19 @@ In case you would like to get confirmation it is working, and taking benefits of
 
 and look at what is displayed on the console. Now remove those lines after validating reading was successfull - no need to keep that kind of debugging afterwards.
 
+<details>
+<summary>Solution</summary>
+TO_REPLACE with...:
+
+    for row in itertools.islice(csvReader, 1, self.maxElements):
+                    name = row[0]
+                    x = float(row[1])
+                    y = float(row[2])
+                    z = float(row[3])
+                    cluster = row[4]
+
+</details>   
+ 
 <a name="part4"></a>
 ## 4. Displaying a shape at X, Y, Z + Colors
 ### 4.1 : Placing at X, Y and Z...
@@ -280,19 +293,45 @@ The steps are:
                             TO_REPLACE))
 
                     #Set Color
-                    # FOR NEXT STEP 
+                    # FOR NEXT STEP COLOR
 ``` 
 
-**TODO:** if you copy the routine displayed above, try to find out which parameters, defined in that same function and regarding positionning, should be placed instead of the **TO_REPLACE**
+**TODO:** if you copy the routine displayed above, try to find out which parameters, defined in that same function _Generate()_ and regarding positionning, should be placed instead of the **TO_REPLACE**...
 
 One add-on/idea: make use of the member _self.scaleDataConverter_ to display the objects at a more suitable position...
 and why so? Any idea?
+    
+<details>
+<summary>Solution</summary>
+In the code replace <code> #Set location</code>, with<br>
+
+    #Set location
+    nextShape.AddTranslateOp().Set(
+              Gf.Vec3f(
+                x, 
+                y,
+                z))   
+
+</details>
 
 **!!!Slightly Filled in the Room!!!** and quite drabbed color... :smile:
 
 <p align="center">
     <img src="images/SlightlyFilledInTheRoom.png">
 <p>
+    
+<details>
+<summary>Solution ...with taking into account _unit/scale_</summary>
+In the code replace <code> #Set location</code>, with<br>
+
+    #Set location
+    nextShape.AddTranslateOp().Set(
+              Gf.Vec3f(
+                self.scaleDataConverter*x, 
+                self.scaleDataConverter*y,
+                self.scaleDataConverter*z))   
+
+</details>
 
 
 ### 4.3 :...and now changing the color
@@ -313,6 +352,15 @@ Something like this?
 
 **TODO 2:** change _[(1, 0, 0)]_ into _categoryColors[int(cluster) % self.maxNumberOfCluster]_
 the why of this : in our CSV file, there is a certain number of _cluster_ values. Now imagine that there is as many of those as elements...how to handle it?
+    
+<details>
+<summary>Solution</summary>
+In the code replace <code> # FOR NEXT STEP COLOR</code>, with<br>
+
+    nextShape.GetDisplayColorAttr().Set(
+             categoryColors[int(cluster) % self.maxNumberOfCluster])     
+
+</details>
 
 The origin of using _maxNumberOfCluster_ is that elements are grouped per class and we somehow limit the number of different colors so to have a better understanding of what is displayed (avoiding displaying one rainbow :rainbow: )
 ...but that is not necessary and would depend on the use case/target (and therefore a member parameter that can/could be changed.)
@@ -356,6 +404,14 @@ the hints:
 * _self.clusterLayerRoot_ : is set as **_/Class__** (member of the class of our extension)
 * from the CSV file, we do retrieve the current _cluster_ value
 
+<details>
+<summary>Solution</summary>
+In the code replace <code># FOR GROUPING PER COLOR</code>, with<br>
+
+    if self.groupByCluster:                    
+           primClusterUrl += self.clusterLayerRoot + cluster
+
+</details>
 
 **EXPECTED RESULTS:**
 <p align="center">
