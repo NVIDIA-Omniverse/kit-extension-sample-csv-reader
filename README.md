@@ -48,6 +48,3 @@ You can also just pass a path to create link to:
 ## Contributing
 The source code for this repository is provided as-is and we are not accepting outside contributions.
 
-## Contributing
-The source code for this repository is provided as-is and we are not accepting outside contributions.
-
