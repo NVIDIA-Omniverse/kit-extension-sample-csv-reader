@@ -12,7 +12,7 @@ some elements to be placed in a 3D environment, as well a cluster column (repres
 In this guide, we will learn how to:
 * open a CSV file and read it
 * place one shape at X,Y,Z position given by the CSV File
-* shape coming as a reference - overriding positions and colors
+* shape coming as a reference - with position and color given my information retrieved from the CSV file
 
 <p align="center">
     <img src="images/OV_CSVReader_WhatToExpect.png">
@@ -22,6 +22,7 @@ In this guide, we will learn how to:
 
 
 ## Table of Content
+0. Prerequisites
 1. [Download the Starter Project](#part1)
 2. [Create one USD stage](#part2)
 3. [Opening one CSV file](#part3)
@@ -54,8 +55,9 @@ To load the extension, one possible way :
     <img src="images/LoadExt.png">
 <p>
 
-This tutorial will focus on the `models.py` file found in the`exts/omni.csv.reader/omni/csv/reader/`  directory.
- To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/).
+This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory.
+    
+To learn more about the other files in the repository, and the structure of one extension, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), explaining how to create on extension and the files coming with it.
 
 In particular, we will be focusing on the function `Generate`. Its workflow is defined as such:
 
