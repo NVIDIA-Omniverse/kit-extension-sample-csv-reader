@@ -168,7 +168,7 @@ The routine below present the different steps.
 **TODO:** replace that code in the section (only the big routine decribed above - the first 2 code lines, namely _SetStageUpAxis_ and _SetStageMetersPerUnit_ are only there for information, and already defined in the section), that would make sense, of the function _Generate_.
 
 <a name="part3"></a>
-## 3. Opening one CSV file
+## 3. Opening CSV file
 ### 3.1 : Format of one CSV File
 CSV Files are common file format used by Data-scientists to store data, for various and heterogenous purposes.
 
@@ -208,18 +208,18 @@ To open and read one CSV file, we do rely on the Python’s inbuilt module calle
                     cluster = row[TO_REPLACE]
 ``` 
 
-Please replace the **TO_REPLACE** with the proper values to match our expectation, taking into account our CSV format. When found, paste that one section after the creation of the stage.
+Please replace the **TO_REPLACE** with the proper values (the position in the CSV row) to match our expectation, taking into account our CSV format. When found, paste that one section after the creation of the stage.
 
 Afterwards, please try running the _Generate_ function on pressing the button named similarly in the **UI**.
 
-For once, we allow you to add:
+In case you would like to get confirmation it is working, and taking benefits of some _debug_ features of OV, you could add:
 
 ```python
                     carb.log_warn(f"X: {x} Y: {y} Z: {z}")
                     i += 1
 ``` 
 
-and look at what is displayed on the console, But please remove those lines after validating reading was successfull (spamming the console :triumph:)...
+and look at what is displayed on the console. Now remove those lines after validating reading was successfull - no need to keep that king of debugging afterwards.
 
 <a name="part4"></a>
 ## 4. Displaying a shape at X, Y, Z + Colors
@@ -233,9 +233,8 @@ building up a namespace that includes the \"encapsulated\" result of composing t
 The idea in our project is that instead of creating one prim per objects (which can be numerous, depending on the size of the CSV file), 
 we do use the tool of using reference such that every displayed object is _based_ on the same shape. 
 Benefits are several:
-1. if the refered shape is changed, all elements would as well (sometimes we may prefer to have cubes, some other times sphere)
+1. if the referred shape is changed, all elements would as well (sometimes we may prefer to have cubes, some other times sphere)
 2. reducing the load of the scene - if saved, the output file (as _usd_ or _usda_) will be smaller
-3. etc...
 
 ### 4.2 : Practice
 Afterwards, in order to differentiate the objects, our algorithm place at different locations and change the color of the elements depending on their class (the column _cluster_ in our CSV file sample)
@@ -283,7 +282,7 @@ The steps are:
                     # FOR NEXT STEP 
 ``` 
 
-**TODO:** if you copy the routine displayed above, try to find out which parameters should be placed instead of the **TO_REPLACE**
+**TODO:** if you copy the routine displayed above, try to find out which parameters, defined in that same function and regarding positionning, should be placed instead of the **TO_REPLACE**
 
 One add-on/idea: make use of the member _self.scaleDataConverter_ to display the objects at a more suitable position...
 and why so? Any idea?
@@ -296,7 +295,7 @@ and why so? Any idea?
 
 
 ### 4.3 :...and now changing the color
-As you noticed, or try looking again at the code above, we do use function _AddTranslateOp().Set_ that we associate to the 
+As you notice, we do use the function _AddTranslateOp().Set_ that we associate to the 
 shape _nextShape_ currently being created.
 
 But if we would like as well to change the color of this one?
