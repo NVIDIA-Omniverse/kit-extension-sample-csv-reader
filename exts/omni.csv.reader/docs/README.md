@@ -1,6 +1,6 @@
 # CSV Reader Extension (omni.csv.reader)
 
-![CVS Reader UI and Result](exts/omni.csv.reader/data/OV_CSVReader_WhatToExpect.png)
+![CVS Reader UI and Result](../data/OV_CSVReader_WhatToExpect.png)
 
 ## Overview
 
