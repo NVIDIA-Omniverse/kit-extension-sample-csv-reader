@@ -1,39 +1,52 @@
-## CVS Reader Extension Sample
-![CVS Reader UI and Result](exts/omni.csv.reader/data/OV_CSVReader_WhatToExpect.png)
+# CSV Reader Extension Sample
 
-README - Jully 5th
-
-To read first:
---------------
-This sample is one example on:<br>
--- handling references in one USD stage<br>
--- using csv python module<br>
--- populating a 3d scene with objects at X,Y,Z from CSV File<br>
+## [CSV Reader (omni.csv.reader)](exts/omni.csv.reader)
+![CSV Reader UI and Result](exts/omni.csv.reader/data/OV_CSVReader_WhatToExpect.png)
 
 
-Content of the package:
------------------------
-one folder called 'kit-extension-sample-csv-reader' that contains the different elements making it as one extension.
-you'll find:
-- \config : the .toml file describing the extension (what will be seen in the extension manager when running OV) + some settings.
-- \data : some icons/pictures 
-- \docs : some docs file (that are used when opening the extension in OV (such as the changelog)).
-- \*.py : where the python extension programs are (_init_.py, extension.py, models.py, views.py)
-	
-
-How to use it in OV:
---------------------
-1) Start your OV app (Create/Kit/Code).
-2) In the Window/Extensions (top menu bar) : search for CSV -> get the extension and enable it.
-3) A new UI window should appear (called CSV Reader).
-4) click on 'Generate' -> that should create elements/shapes here and there based on the info coming from the CSV file
-5) Note that it takes by default the CSV sample from the _data_ folder, but you can as well select another file with the filepicker '...' button
+### About
+This extension shows how to build a CSV reader extension. This sample extension presents how to read a csv file, to populate a 3D scene with objects at X,Y,Z coordinates given in the CSV file, as well as color(s). Generated Objects rely on the USD referencing schema process.
 
 
-Known limitations :
-------------------
-All limitations are per designed.This is to be used as one training sample for creating one extension
+### [README](exts/omni.csv.reader)
+See the [README for this extension](exts/omni.csv.reader) to learn more about it including how to use it.
 
+### [Tutorial](tutorial/tutorial.md)
+Follow a [step-by-step tutorial](tutorial/tutorial.md) that walks you through the creation of the Generate function (to open, read and populate the 3D scene)
+
+## Adding This Extension
+
+To add this extension to your Omniverse app:
+1. Go into: Extension Manager -> Gear Icon -> Extension Search Path
+2. Add this as a search path: `git://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader?branch=main&dir=exts`
+
+
+## Linking with an Omniverse app
+
+For a better developer experience, it is recommended to create a folder link named `app` to the *Omniverse Kit* app installed from *Omniverse Launcher*. A convenience script to use is included.
+
+Run:
+
+```bash
+> link_app.bat
+```
+
+There is also an analogous `link_app.sh` for Linux. If successful you should see `app` folder link in the root of this repo.
+
+If multiple Omniverse apps is installed script will select recommended one. Or you can explicitly pass an app:
+
+```bash
+> link_app.bat --app code
+```
+
+You can also just pass a path to create link to:
+
+```bash
+> link_app.bat --path "C:/Users/bob/AppData/Local/ov/pkg/create-2022.1.3"
+```
+
+## Contributing
+The source code for this repository is provided as-is and we are not accepting outside contributions.
 
 ## Contributing
 The source code for this repository is provided as-is and we are not accepting outside contributions.
