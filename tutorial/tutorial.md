@@ -22,7 +22,7 @@ In this guide, we will learn how to:
 
 
 ## Table of Content
-0. Prerequisites
+0. [Prerequisites](#Part0)
 1. [Download the Starter Project](#part1)
 2. [Create one USD stage](#part2)
 3. [Opening one CSV file](#part3)
@@ -31,6 +31,7 @@ In this guide, we will learn how to:
 6. [Challenges](#part6)
 7. [Discussion](#part7)
 
+<a name="part0"></a>
 ## Prerequisites
 * OV Code 2022.1 installed on one computer [GPU equiped and validated](https://docs.omniverse.nvidia.com/app_view/common/technical-requirements.html)
 * some basics knowledge of python 
