@@ -90,8 +90,11 @@ In particular, we will be focusing on the function `Generate`. Its workflow is d
                         #   Skip the header row
                         #   Don't read more than the max number of elements
                         #   Create the shape with the appropriate color at each coordinate
-
+                            
+                            # Stage 4 (4.2)
                             #Read data from the next row
+    
+                            # root prim
 
                             # create the prim cluster path
 
@@ -245,6 +248,7 @@ The steps are:
 
 
 ```python
+                    # root prim
                     primClusterUrl = self.rootUrl
 
                     # add group to path if the user has selected that option
