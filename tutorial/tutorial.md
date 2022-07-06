@@ -64,9 +64,7 @@ In particular, we will be focusing on the function `Generate`. Its workflow is d
 ```python
         def Generate(self):
                 
-                # Stage 2
-                def Generate(self):
-        
+                # Stage 2        
                 # Clear the stage
 
                 # create a new stage with Y up and in meters
@@ -121,7 +119,7 @@ In particular, we will be focusing on the function `Generate`. Its workflow is d
 ### 2.1 : Prior populating, setting that up - overall description
 The first step we want to go with in our _Generate_ function is to create one stage, cleaning first what was created from previous run and setting some basic fundamentals, namely creating one _Root_ prim, adding a light (everyone likes having lights). 
 
-Morevoer, working towards populating a 3D environment, we define:
+Morevoer, working towards populating a 3D environment, we define (:
 * the **UP** axis : 
 ```python
     UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
@@ -136,6 +134,7 @@ Note that the *stage_unit_per_meter* is one member that is set once and for all 
 The routine below present the different steps.
 
 ```python
+        # Clear the stage
         stage = omni.usd.get_context().get_stage()
         primRoot = stage.GetPrimAtPath(self.rootUrl)
         if (primRoot.IsValid()):
@@ -166,7 +165,7 @@ The routine below present the different steps.
         newLight.CreateIntensityAttr(5000.0)
 ```  
 ### 2.2 : Practice
-**TODO:** replace that code in the section, that would make sense, of the function _Generate_.
+**TODO:** replace that code in the section (only the big routine decribed above - the first 2 code lines, namely _SetStageUpAxis_ and _SetStageMetersPerUnit_ are only there for information, and already defined in the section), that would make sense, of the function _Generate_.
 
 <a name="part3"></a>
 ## 3. Opening one CSV file
