@@ -220,7 +220,7 @@ In case you would like to get confirmation it is working, and taking benefits of
                     i += 1
 ``` 
 
-and look at what is displayed on the console. Now remove those lines after validating reading was successfull - no need to keep that king of debugging afterwards.
+and look at what is displayed on the console. Now remove those lines after validating reading was successfull - no need to keep that kind of debugging afterwards.
 
 <a name="part4"></a>
 ## 4. Displaying a shape at X, Y, Z + Colors
