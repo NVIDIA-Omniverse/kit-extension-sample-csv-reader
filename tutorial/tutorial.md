@@ -256,7 +256,7 @@ The steps are:
 1. Create a place for the reference to live
 2. Create the reference
 3. create a new prim that refers to
-4. optionnal: override/set color, position, scale, etc...
+4. optional: override/set color, position, scale, etc...
 
 
 ```python
