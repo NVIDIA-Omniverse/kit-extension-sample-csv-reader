@@ -12,7 +12,7 @@ some elements to be placed in a 3D environment, as well a cluster column (repres
 In this guide, we will learn how to:
 * open a CSV file and read it
 * place one shape at X,Y,Z position given by the CSV File
-* shape coming as a reference - with position and color given by data retrieved from the CSV file
+* shape displayed relying on the USD reference schema process - with position and color given by data retrieved from the CSV file
 
 <p align="center">
     <img src="images/OV_CSVReader_WhatToExpect.png">
@@ -55,12 +55,11 @@ To load the extension, one possible way :
 <p align="center">
     <img src="images/LoadExt.png">
 <p>
-
-This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory.
     
-To learn more about the other files in the repository, and the structure of one extension, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), explaining how to create on extension and the files coming with it.
+To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), explaining how to create on extension and the files coming with it.
 
-In particular, we will be focusing on the function `Generate`. Its workflow is defined as such:
+
+This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory, and in particular, on the function `Generate`. Its workflow is defined as such:
 
 ```python
         def Generate(self):
@@ -166,7 +165,7 @@ The routine below present the different steps.
         newLight.CreateIntensityAttr(5000.0)
 ```  
 ### 2.2 : Practice
-**TODO:** replace that code in the section (only the big routine decribed above - the first 2 code lines, namely _SetStageUpAxis_ and _SetStageMetersPerUnit_ are only there for information, and already defined in the section), that would make sense, of the function _Generate_.
+**TODO:** replace that code in the right section (only the big routine decribed above - the first 2 code lines, namely _SetStageUpAxis_ and _SetStageMetersPerUnit_ are only there for information, and already defined in the routine section), of the function _Generate_.
 
 <a name="part3"></a>
 ## 3. Opening CSV file
@@ -296,13 +295,13 @@ The steps are:
                     # FOR NEXT STEP COLOR
 ``` 
 
-**TODO:** if you copy the routine displayed above, try to find out which parameters, defined in that same function _Generate()_ and regarding positionning, should be placed instead of the **TO_REPLACE**...
+**TODO:** Copy the routine displayed above, and place it at the right location in the function _Generate()_. But do change the **TO_REPLACE** instances with the right values (they represent the position retrieved from the CSV file).
 
 One add-on/idea: make use of the member _self.scaleDataConverter_ to display the objects at a more suitable position...
 and why so? Any idea?
     
 <details>
-<summary>Solution</summary>
+<summary>Solution (Basic)</summary>
 In the code replace <code> #Set location</code>, with<br>
 
     #Set location
@@ -351,7 +350,8 @@ Something like this?
 <p>
 
 **TODO 2:** change _[(1, 0, 0)]_ into _categoryColors[int(cluster) % self.maxNumberOfCluster]_
-the why of this : in our CSV file, there is a certain number of _cluster_ values. Now imagine that there is as many of those as elements...how to handle it?
+    
+target of this line : changing the color accordingly to the _cluster_ value the object belongs to. 
     
 <details>
 <summary>Solution</summary>
@@ -362,7 +362,7 @@ In the code replace <code> # FOR NEXT STEP COLOR</code>, with<br>
 
 </details>
 
-The origin of using _maxNumberOfCluster_ is that elements are grouped per class and we somehow limit the number of different colors so to have a better understanding of what is displayed (avoiding displaying one rainbow :rainbow: )
+The origin of using _maxNumberOfCluster_ is that elements are grouped per class and we do want to limit the number of different colors so to have a better understanding of what is displayed (avoiding displaying one rainbow :rainbow: )
 ...but that is not necessary and would depend on the use case/target (and therefore a member parameter that can/could be changed.)
 
 > 📝 [for more information about that _GetDisplayColorAttr_ function](https://graphics.pixar.com/usd/release/api/class_usd_geom_gprim.html)
