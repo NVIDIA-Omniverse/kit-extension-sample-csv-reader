@@ -5,14 +5,14 @@
 
 
 ### About
-This extension shows how to build a CSV reader extension. This sample extension presents how to read a csv file, to populate a 3D scene with objects at X,Y,Z coordinates given in the CSV file, as well as color(s). Generated Objects rely on the USD referencing schema process.
+This sample extension presents, as one CSV reader extension, how to read a csv file, to populate a 3D scene with objects at X,Y,Z coordinates given by the CSV file data, as well as color(s). Generated Objects rely on the USD referencing schema process.
 
 
 ### [README](exts/omni.csv.reader)
 See the [README for this extension](exts/omni.csv.reader) to learn more about it including how to use it.
 
 ### [Tutorial](tutorial/tutorial.md)
-Follow a [step-by-step tutorial](tutorial/tutorial.md) that walks you through the creation of the Generate function (to open, read and populate the 3D scene)
+Follow a [step-by-step tutorial](tutorial/tutorial.md) that walks you through the creation of the Generate function (to open, read and populate the 3D scene, grouping objects by cluster or not, with different colors)
 
 ## Adding This Extension
 
