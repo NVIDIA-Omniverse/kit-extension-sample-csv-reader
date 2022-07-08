@@ -19,20 +19,7 @@ In this guide, you learn how to:
 <p>
 
 
-
-
-## Table of Content
-0. [Prerequisites](#Part0)
-1. [Download the Starter Project](#part1)
-2. [Create one USD stage](#part2)
-3. [Opening one CSV file](#part3)
-4. [Displaying a shape at X,Y,Z + Colors](#part4)
-5. [Grouping by class of Color/Cluster](#part5)
-6. [Challenges](#part6)
-7. [Discussion](#part7)
-
-<a name="part0"></a>
-## Prerequisites
+## 0. Prerequisites
 * OV Code 2022.1 installed on one computer [GPU equiped and validated](https://docs.omniverse.nvidia.com/app_view/common/technical-requirements.html)
 * some basics knowledge of python 
 * Some knowledge of USD in particular the notion of reference API
@@ -41,7 +28,7 @@ In this guide, you learn how to:
     * [NVIDIA DLI Course](https://courses.nvidia.com/courses/course-v1:DLI+S-FX-02+V1/)
 * [CSV file](https://en.wikipedia.org/wiki/Comma-separated_values) 
 
-<a name="part1"></a>
+    
 ## 1. Download the Starter Project
 To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-reader` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader). 
 
@@ -114,7 +101,7 @@ This tutorial will focus on the `models.py` file found in the `exts/omni.csv.rea
 ```           
 > 📝 **Note:**  CSV Sample Files (2) to be read and default shapes to be used as references, are provided within the _data_ folder of this extension
 
-<a name="part2"></a>
+
 ## 2. Create one USD stage
 ### 2.1 : Prior populating, setting that up - overall description
 The first step we want to go with in `Generate()` is to create one stage, cleaning first what was created from previous run and setting some basic fundamentals, namely creating one _Root_ prim, adding a light (everyone likes having lights). 
@@ -167,7 +154,7 @@ The routine below present the different steps.
 ### 2.2 : Practice
 **TODO:** replace that code in the right section (only the big routine decribed above - the first 2 code lines, namely `SetStageUpAxis` and `SetStageMetersPerUnit` are only there for information, and already defined in the routine section), of `Generate()`.
 
-<a name="part3"></a>
+
 ## 3. Opening CSV file
 ### 3.1 : Format of one CSV File
 CSV Files are common file format used by Data-scientists to store data, for various and heterogenous purposes.
@@ -234,7 +221,7 @@ TO_REPLACE with...:
 
 </details>   
  
-<a name="part4"></a>
+
 ## 4. Displaying a shape at X, Y, Z + Colors
 ### 4.1 : Placing at X, Y and Z...
 When working with USD scene composition, using _reference_ is one basic and usefull API. 
@@ -367,7 +354,7 @@ The origin of using _maxNumberOfCluster_ is that elements are grouped per class 
 
 > 📝 [for more information about `GetDisplayColorAttr()`](https://graphics.pixar.com/usd/release/api/class_usd_geom_gprim.html)
 
-<a name="part5"></a>
+
 ## 5. Grouping by class
 ### 5.1 : Why Grouping?
 Why not? :wink:
@@ -422,7 +409,7 @@ In the code replace <code># FOR GROUPING PER COLOR</code>, with<br>
     <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_WhatToExpect.png">
 <p>
 
-<a name="part6"></a>
+
 ## 6. CHALLENGES
 ### 6.1 : bringing a third ref shape
 If you look in the _data_ folder, we added a third one, namely _BasicQuadAsRef.usda_. The shape is not necessarily one good representative (flat surface), but depending on the target of why reading the CSV file, it can make sense.
@@ -436,7 +423,7 @@ try it out by yourself.
 ### 6.2 : Changing the size of the shape
 While so far we changed the position and the color of an object, we would like to alter as well the size/scale of it.
 
-One Hint: if to change the position (_Add a Translate_) we use _nextShape.AddTranslateOp().Set_ , what do you think would be the solution to _Add a Rotation_?
+One Hint: if to change the position (_Add a Translate_) we use `nextShape.AddTranslateOp().Set` , what do you think would be the solution to _Add a Rotation_?
 
 > 📝 **Beware** of Transformations: USD uses the [UsdGeomXFormable](https://graphics.pixar.com/usd/release/api/class_usd_geom_xformable.html) schema. If you start looking deeper in it, you will notice that order of operations may differ from oneused _schemas_ to the other (example : SRT for Scale-Rotate-Translate...but can be different depending on...)
 
@@ -446,7 +433,7 @@ One Hint: if to change the position (_Add a Translate_) we use _nextShape.AddTra
     <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_MixOfAllpng.png">
 <p>
 
-<a name="part7"></a>
+
 ## 7. Discussion
 ### CSV extensive format:
 As presented, our CSV sample files contain 5 columns, including the _X_,_Y_,_Z_ and _cluster_ values...now CSV files may have
