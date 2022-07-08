@@ -9,7 +9,7 @@ some elements to be placed in a 3D environment, as well a cluster column (repres
 
 
 ## Learning Objectives
-In this guide, we will learn how to:
+In this guide, you learn how to:
 * open a CSV file and read it
 * place one shape at X,Y,Z position given by the CSV File
 * shape displayed relying on the USD reference schema process - with position and color given by data retrieved from the CSV file
@@ -48,8 +48,8 @@ To get the assets for this hands-on lab, please clone the `tutorial-start` branc
 `git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)' 
 
 To load the extension, one possible way :
-* in the extension tab, click on the _gear wheel_
-* in the _extension search path_, add the path to the folder where you cloned the git repository
+* in the extension tab, click on the **gear wheel**
+* in the **extension search path**, add the path to the folder where you cloned the git repository
 * afterwards, if you search for **CSV** in the extension tab, that one should then appear...
 
 <p align="center">
@@ -117,7 +117,7 @@ This tutorial will focus on the `models.py` file found in the `exts/omni.csv.rea
 <a name="part2"></a>
 ## 2. Create one USD stage
 ### 2.1 : Prior populating, setting that up - overall description
-The first step we want to go with in our _Generate_ function is to create one stage, cleaning first what was created from previous run and setting some basic fundamentals, namely creating one _Root_ prim, adding a light (everyone likes having lights). 
+The first step we want to go with in `Generate()` is to create one stage, cleaning first what was created from previous run and setting some basic fundamentals, namely creating one _Root_ prim, adding a light (everyone likes having lights). 
 
 Morevoer, working towards populating a 3D environment, we define (:
 * the **UP** axis : 
@@ -129,7 +129,7 @@ Morevoer, working towards populating a 3D environment, we define (:
 ```python
     UsdGeom.SetStageMetersPerUnit(stage, self.stage_unit_per_meter)
 ```
-Note that the *stage_unit_per_meter* is one member that is set once and for all in this current extension, but has been thought such that in the next version (your job :smile:) it could be, for example, modified in the UI.
+Note that the `stage_unit_per_meter` is one member that is set once and for all in this current extension, but has been thought such that in the next version (your job :smile:) it could be, for example, modified in the UI.
 
 The routine below present the different steps.
 
@@ -165,7 +165,7 @@ The routine below present the different steps.
         newLight.CreateIntensityAttr(5000.0)
 ```  
 ### 2.2 : Practice
-**TODO:** replace that code in the right section (only the big routine decribed above - the first 2 code lines, namely _SetStageUpAxis_ and _SetStageMetersPerUnit_ are only there for information, and already defined in the routine section), of the function _Generate_.
+**TODO:** replace that code in the right section (only the big routine decribed above - the first 2 code lines, namely `SetStageUpAxis` and `SetStageMetersPerUnit` are only there for information, and already defined in the routine section), of `Generate()`.
 
 <a name="part3"></a>
 ## 3. Opening CSV file
@@ -181,7 +181,7 @@ the structure of such a file is:
 - the first line, or _header_, contains the names of the different fields.
 - the following lines contain the values for each column, representing one 'element' per line.
 
-To open and read one CSV file, we do rely on the Python’s inbuilt module called [**_csv_**](https://docs.python.org/3/library/csv.html) and in particular the _csv.reader_ object; this is combined with functions _open_ (to open the file), _cvs.reader_ to read the file with as argument _delimiter_ that specifies the character used to separate each field. 
+To open and read one CSV file, we do rely on the Python’s inbuilt module called [**_csv_**](https://docs.python.org/3/library/csv.html) and in particular the _csv.reader_ object; this is combined with  `open()` (to open the file), `cvs.reader()` to read the file with as argument `delimiter` that specifies the character used to separate each field. 
 
 ### 3.2 : Practice
 **TODO:** The routine in  `Generate()` is the one below. Now, knowing that our CSV file is made of:
@@ -334,8 +334,8 @@ In the code replace <code> #Set location</code>, with<br>
 
 
 ### 4.3 :...and now changing the color
-As you notice, we do use the function _AddTranslateOp().Set_ that we associate to the 
-shape _nextShape_ currently being created.
+As you notice, we do use `AddTranslateOp().Set` that we associate to the 
+shape `nextShape` currently being created.
 
 But if we would like as well to change the color of this one?
 
@@ -365,7 +365,7 @@ In the code replace <code> # FOR NEXT STEP COLOR</code>, with<br>
 The origin of using _maxNumberOfCluster_ is that elements are grouped per class and we do want to limit the number of different colors so to have a better understanding of what is displayed (avoiding displaying one rainbow :rainbow: )
 ...but that is not necessary and would depend on the use case/target (and therefore a member parameter that can/could be changed.)
 
-> 📝 [for more information about that _GetDisplayColorAttr_ function](https://graphics.pixar.com/usd/release/api/class_usd_geom_gprim.html)
+> 📝 [for more information about `GetDisplayColorAttr()`](https://graphics.pixar.com/usd/release/api/class_usd_geom_gprim.html)
 
 <a name="part5"></a>
 ## 5. Grouping by class
