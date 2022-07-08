@@ -119,7 +119,7 @@ This tutorial will focus on the `models.py` file found in the `exts/omni.csv.rea
 ### 2.1 : Prior populating, setting that up - overall description
 The first step we want to go with in `Generate()` is to create one stage, cleaning first what was created from previous run and setting some basic fundamentals, namely creating one _Root_ prim, adding a light (everyone likes having lights). 
 
-Morevoer, working towards populating a 3D environment, we define (:
+Morevoer, working towards populating a 3D environment, we define:
 * the **UP** axis : 
 ```python
     UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
