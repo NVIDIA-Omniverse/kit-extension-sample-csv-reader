@@ -1,4 +1,4 @@
-![](images/logo.png)
+![](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/logo.png)
 
 # Create One CVS Reader with Omniverse Kit Extensions
 
@@ -15,7 +15,7 @@ In this guide, we will learn how to:
 * shape displayed relying on the USD reference schema process - with position and color given by data retrieved from the CSV file
 
 <p align="center">
-    <img src="images/OV_CSVReader_WhatToExpect.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_WhatToExpect.png">
 <p>
 
 
@@ -53,7 +53,7 @@ To load the extension, one possible way :
 * afterwards, if you search for **CSV** in the extension tab, that one should then appear...
 
 <p align="center">
-    <img src="images/LoadExt.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/LoadExt.png">
 <p>
     
 To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), explaining how to create on extension and the files coming with it.
@@ -174,7 +174,7 @@ CSV Files are common file format used by Data-scientists to store data, for vari
 
 
 <p align="center">
-    <img src="images/CSV_Sample_both.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/CSV_Sample_both.png">
 <p>
 
 the structure of such a file is:
@@ -316,7 +316,7 @@ In the code replace <code> #Set location</code>, with<br>
 **!!!Slightly Filled in the Room!!!** and quite drabbed color... :smile:
 
 <p align="center">
-    <img src="images/SlightlyFilledInTheRoom.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/SlightlyFilledInTheRoom.png">
 <p>
     
 <details>
@@ -346,7 +346,7 @@ But if we would like as well to change the color of this one?
 
 Something like this?
 <p align="center">
-    <img src="images/AllRed.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/AllRed.png">
 <p>
 
 **TODO 2:** change _[(1, 0, 0)]_ into _categoryColors[int(cluster) % self.maxNumberOfCluster]_
@@ -377,7 +377,7 @@ In our current approach, based on our CSV sample, we thought about the fact that
 let's imagine that the _cluster_ or _class_ topic refers to object of one certain type (_cluster_ 6 refers to _street lights_ and _cluster_ 29 to mail boxes...our CSV is about the positions of street's elements in one town, as an example). Then after displaying the shapes, someone would like to see only the mail boxes. Instead of selecting one by one in the stage scene, we can then select a _group_ and hide/show it easily thanks to the _eye icon_
 
 <p align="center">
-    <img src="images/TheMagicEye.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/TheMagicEye.png">
 <p>
 
 ### 5.2 : Practice - How to do it.
@@ -415,11 +415,11 @@ In the code replace <code># FOR GROUPING PER COLOR</code>, with<br>
 
 **EXPECTED RESULTS:**
 <p align="center">
-    <img src="images/WithGrouping.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/WithGrouping.png">
 <p>
 
 <p align="center">
-    <img src="images/OV_CSVReader_WhatToExpect.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_WhatToExpect.png">
 <p>
 
 <a name="part6"></a>
@@ -443,7 +443,7 @@ One Hint: if to change the position (_Add a Translate_) we use _nextShape.AddTra
 
 **MIXING a bit of Everything :**
 <p align="center">
-    <img src="images/OV_CSVReader_MixOfAllpng.png">
+    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_MixOfAllpng.png">
 <p>
 
 <a name="part7"></a>
