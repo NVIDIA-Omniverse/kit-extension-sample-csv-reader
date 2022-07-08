@@ -59,7 +59,7 @@ To load the extension, one possible way :
 To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), explaining how to create on extension and the files coming with it.
 
 
-This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory, and in particular, on the function `Generate`. Its workflow is defined as such:
+This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory, and in particular, on `Generate()`. Its workflow is defined as such:
 
 ```python
         def Generate(self):
@@ -184,7 +184,7 @@ the structure of such a file is:
 To open and read one CSV file, we do rely on the Python’s inbuilt module called [**_csv_**](https://docs.python.org/3/library/csv.html) and in particular the _csv.reader_ object; this is combined with functions _open_ (to open the file), _cvs.reader_ to read the file with as argument _delimiter_ that specifies the character used to separate each field. 
 
 ### 3.2 : Practice
-**TODO:** The routine in our function _Generate_ is the one below. Now, knowing that our CSV file is made of:
+**TODO:** The routine in  `Generate()` is the one below. Now, knowing that our CSV file is made of:
 - first line : the _header_, only fields name - not to be taken into account, starting then the loop from 1!
 - 5 columns associated to the fields
 - plenty of filled lines
@@ -210,7 +210,7 @@ To open and read one CSV file, we do rely on the Python’s inbuilt module calle
 
 Please replace the **TO_REPLACE** with the proper values (the position in the CSV row) to match our expectation, taking into account our CSV format. When found, paste that one section after the creation of the stage.
 
-Afterwards, please try running the _Generate_ function on pressing the button named similarly in the **UI**.
+Afterwards, please try running `Generate()` on pressing the button named similarly in the **UI**.
 
 In case you would like to get confirmation it is working, and taking benefits of some _debug_ features of OV, you could add:
 
@@ -295,7 +295,7 @@ The steps are:
                     # FOR NEXT STEP COLOR
 ``` 
 
-**TODO:** Copy the routine displayed above, and place it at the right location in the function _Generate()_. But do change the **TO_REPLACE** instances with the right values (they represent the position retrieved from the CSV file).
+**TODO:** Copy the routine displayed above, and place it at the right location in `Generate()`. But do change the **TO_REPLACE** instances with the right values (they represent the position retrieved from the CSV file).
 
 One add-on/idea: make use of the member _self.scaleDataConverter_ to display the objects at a more suitable position...
 and why so? Any idea?
