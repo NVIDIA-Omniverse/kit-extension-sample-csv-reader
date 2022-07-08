@@ -131,7 +131,7 @@ class MainModel():
                     shapeUrl = primClusterUrl + '/box_%d' % i
                     i += 1
 
-                    #Create first reference prim
+                    #Create reference prim
                     refShape = stage.OverridePrim(shapeUrl)
 
                     #Create instance to reference prim

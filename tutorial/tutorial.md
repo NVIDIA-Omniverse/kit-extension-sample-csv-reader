@@ -2,56 +2,102 @@
 
 # Create One CVS Reader with Omniverse Kit Extensions
 
-**CSV** File, or **C**omma **S**eparated **V**alues, is the simplest form for storing data/information separated by commas, cf [CSV File](https://en.wikipedia.org/wiki/Comma-separated_values).
-Those files are commonly used for exchanging data of various type and are broadly used. Examples : position of radio antennas and their types spread accross one town/region, 
-position of hotels in Paris city and their grade, etc...In our case the CSV file contains X,Y,Z information about the position of
-some elements to be placed in a 3D environment, as well a cluster column (representing some extra info), to be used as a color class grouping process.
+**CSV** File, or **C**omma **S**eparated **V**alues, is the simplest form for storing data/information separated by commas. You can learn more about them in this [Wikipedia article](https://en.wikipedia.org/wiki/Comma-separated_values).
+CSV files are commonly used to exchange data of various type and are broadly used. For example: 
 
+- the position of radio antennas and their types spread accross one town/region
+- the position of hotels in Paris and their grade,
+
+In this case the CSV file contains X,Y,Z information about the position of
+some elements to be placed in a 3D environment, as well as a cluster column (representing some extra info), that will be used color the elements by group.
 
 ## Learning Objectives
+
 In this guide, you learn how to:
-* open a CSV file and read it
-* place one shape at X,Y,Z position given by the CSV File
-* shape displayed relying on the USD reference schema process - with position and color given by data retrieved from the CSV file
+
+- Open a CSV file and read it
+- Place one shape at an X,Y,Z position given by the CSV File
+- Create USD references for the shapes to save resources
+- Color the shapes based on data retrieved from the CSV file
 
 <p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_WhatToExpect.png">
+    <img width=75% src="images/OV_CSVReader_WhatToExpect.png">
 <p>
 
+## Prerequisites
 
-## 0. Prerequisites
-* OV Code 2022.1 installed on one computer [GPU equiped and validated](https://docs.omniverse.nvidia.com/app_view/common/technical-requirements.html)
-* some basics knowledge of python 
-* Some knowledge of USD in particular the notion of reference API
-    * [PIXAR USD Tutorial referencing](https://graphics.pixar.com/usd/release/tut_referencing_layers.html)
-    * [NVIDIA Developer page](https://developer.nvidia.com/usd/tutorials)
-    * [NVIDIA DLI Course](https://courses.nvidia.com/courses/course-v1:DLI+S-FX-02+V1/)
-* [CSV file](https://en.wikipedia.org/wiki/Comma-separated_values) 
+- Omniverse Code 2022.1 or above
+- [Omniverse compatible GPU](https://docs.omniverse.nvidia.com/app_view/common/technical-requirements.html)
+- Working knowledge of Python
+- Working knowledge of USD in particular the notion of reference API
+  - [PIXAR USD Tutorial referencing](https://graphics.pixar.com/usd/release/tut_referencing_layers.html)
+  - [NVIDIA Developer page](https://developer.nvidia.com/usd/tutorials)
+  - [NVIDIA DLI Course](https://courses.nvidia.com/courses/course-v1:DLI+S-FX-02+V1/)
+- [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)
 
-    
+## Table of Contents
+
+1. [Download the Starter Project](#1-download-the-starter-project)
+
+    1.1 [Load the Extension](#11-load-the-extension)
+
+    1.2 [Load the Extension](#11-load-the-extension)
+
+2. [](#2-prepare-the-stage)
+
+    2.1 [Clear the Stage](#21-clear-the-stage)
+
+    2.2 [Create a New Stage](#22-create-a-new-stage)
+
+    2.3 [Set Stage Parameters](#23-set-stage-parameters)
+
+    2.4 [Add a Light](#24-add-a-light)
+
+3. [CSV File](#3-csv-file)
+
+    3.1 [CSV File Format](#31-csv-file-format)
+
+    3.2 [Check that the File Exists](#32-check-that-the-file-exists)
+
+    3.3 [Read the CSV File](#33-read-the-csv-file)
+
+    3.4 [Process the CSV File](#34-process-the-csv-file)
+
+4. [Create Each Shape](#4-create-each-shape)
+
+    4.1 [Determine the Prim Path](#41-determine-the-prim-path)
+
+    4.2 [Insert a Reference Prim](#42-insert-a-reference-prim)
+
+    4.3 [Set the Position of the Prim](#43-set-the-position-of-the-prim)
+
+    4.4 [Color the Shapes](#44-color-the-shapes)
+
+5. [Conclusions](#5-conclusions)
+
 ## 1. Download the Starter Project
-To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-reader` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader). 
 
-`git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)' 
+To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-reader` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader).
 
-To load the extension, one possible way :
-* in the extension tab, click on the **gear wheel**
-* in the **extension search path**, add the path to the folder where you cloned the git repository
-* afterwards, if you search for **CSV** in the extension tab, that one should then appear...
+`git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)'
+
+## 1.1 Load the Extension
+
+In the extension tab, click on the **gear wheel**. Next, in the **extension search path**, add the path to the `exts` sub-folder where you cloned the git repository. Then, search for **CSV** in the extension tab, and enable the extension by clicking on its toggle button.
 
 <p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/LoadExt.png">
+    <img width="75%" src="images/LoadExt.png">
 <p>
-    
-To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), explaining how to create on extension and the files coming with it.
 
+To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), which explains how to create on extension.
 
-This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory, and in particular, on `Generate()`. Its workflow is defined as such:
+## 1.2 Open `models.py`
+
+This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/`  directory, and in particular, on `Generate()`. The starting point of `Generate()` is included below for your reference:
 
 ```python
         def Generate(self):
-                
-                # Stage 2        
+                 
                 # Clear the stage
 
                 # create a new stage with Y up and in meters
@@ -66,7 +112,6 @@ This tutorial will focus on the `models.py` file found in the `exts/omni.csv.rea
 
                 # add a light
         
-                # Stage 3 (3.2)
                 # check that CSV exists
 
                     # Read CSV file
@@ -76,7 +121,6 @@ This tutorial will focus on the `models.py` file found in the `exts/omni.csv.rea
                         #   Don't read more than the max number of elements
                         #   Create the shape with the appropriate color at each coordinate
                             
-                            # Stage 4 (4.2)
                             #Read data from the next row
     
                             # root prim
@@ -95,32 +139,239 @@ This tutorial will focus on the `models.py` file found in the `exts/omni.csv.rea
 
                             #Set location
                             
-                            # Stage 5 (5.2)
                             #Set Color
     
-```           
-> 📝 **Note:**  CSV Sample Files (2) to be read and default shapes to be used as references, are provided within the _data_ folder of this extension
-
-
-## 2. Create one USD stage
-### 2.1 : Prior populating, setting that up - overall description
-The first step we want to go with in `Generate()` is to create one stage, cleaning first what was created from previous run and setting some basic fundamentals, namely creating one _Root_ prim, adding a light (everyone likes having lights). 
-
-Morevoer, working towards populating a 3D environment, we define:
-* the **UP** axis : 
-```python
-    UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
 ```
-[Quoting:](https://graphics.pixar.com/usd/release/tut_xforms.html?highlight=xformop) _Computer graphics pipelines almost always pick an axis to represent the “up” direction. Common choices are +Y and +Z._
-* the **UNIT** :
+
+> 📝 **Note:**  CSV Sample Files are provided within the _data_ folder of this extension
+
+## 2. Prepare the Stage
+
+This section demonstrates how to prepare a stage for shapes to be imported from a CSV file.
+
+### 2.1 Clear the Stage
+
+The first step is to clear the stage in order to remove any data from previous imports. This is done with the following code:
+
 ```python
-    UsdGeom.SetStageMetersPerUnit(stage, self.stage_unit_per_meter)
+        # Clear the stage
+        stage = omni.usd.get_context().get_stage()
+        primRoot = stage.GetPrimAtPath(self.rootUrl)
+        if (primRoot.IsValid()):
+            stage.RemovePrim(self.rootUrl)
 ```
-Note that the `stage_unit_per_meter` is one member that is set once and for all in this current extension, but has been thought such that in the next version (your job :smile:) it could be, for example, modified in the UI.
 
-The routine below present the different steps.
+The first statement gets a reference to the current stage. The second statement gets a reference to the root prim, and if that prim is valid it is cleared.
+
+### 2.2 Create a New Stage
+
+Next a new stage is created with the following statements:
 
 ```python
+        # create a new stage with Y up and in meters
+        if omni.usd.get_context().new_stage() is False:
+            carb.log_warn(f"failing creating a new stage")
+            return None
+                
+        stage = omni.usd.get_context().get_stage()
+```
+
+Here a new stage is created. If that fails a warning is issued and `Generate()` returns. Otherwise, the new stage is retrieved to be used moving forward.
+
+### 2.3 Set Stage Parameters
+
+Then, the parameters for the stage are set with the statements below:
+
+```python
+        #  set the up axis
+        UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
+        #  set the unit of the world
+        UsdGeom.SetStageMetersPerUnit(stage, self.stage_unit_per_meter)
+        # define the root prim
+        stage.DefinePrim(self.rootUrl)
+        # Define the root prim as the default
+        rootPrim = stage.GetPrimAtPath(self.rootUrl)
+        stage.SetDefaultPrim(rootPrim)
+```
+
+In these statements, the `y` axis is set to up, the stage units are set to meters, the root prim is set and the root prim is set to default. These steps are all necessary so that when we import shapes from a CSV file they have the up-direction we expect, are the correct size, and are added to the correct location within the stage tree.
+
+### 2.4 Add a light
+
+Finally, a light is added so that the shapes are visible once imported: 
+
+```python
+        # add a light
+        stage = omni.usd.get_context().get_stage()
+        LightUrl = self.rootUrl + '/DistantLight'
+        newLight = UsdLux.DistantLight.Define(stage, LightUrl)
+        newLight.CreateAngleAttr(0.53)
+        newLight.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        newLight.CreateIntensityAttr(5000.0)
+```
+
+## 3. CSV file
+
+This section demonstrates how to open and read from a CSV file.
+
+### 3.1 CSV File Format
+
+CSV Files are common file format used by Data-scientists to store data. Two sample CSV files are shown below:
+
+<p align="center">
+    <img width="75%" src="images/CSV_Sample_both.png">
+<p>
+
+the common format for CSV files contains a header in the first line with names for the different fields and any number of following lines which contain values for each column. Each row represents one element in the list.
+
+The rest of this section will outline how to open and read the data from a CSV file.
+
+### 3.2 Check that the File Exists
+
+It is a good practice to check that a file exists before trying to open it as shown below:
+
+```python
+    # check that CSV exists
+    if os.path.exists(self.CSVFilePath):
+```
+
+If the file exists, then continue. If not, gracefully exit the routine and preferably notify the user that the file does not exist.
+
+### 3.3 Read the CSV file
+
+To open and read one CSV file, use Python’s inbuilt [**_csv_**](https://docs.python.org/3/library/csv.html) module ad demonstrated in the following snippet:
+
+```python
+    # Read CSV file
+    with open(self.CSVFilePath, newline='') as csvfile:
+        csvReader = csv.reader(csvfile, delimiter=',')
+        i = 1
+```
+
+Here the file is opened with the `open` statement and then then `csv.reader` reads the files contents into a list. The iterator, `i`, will be used later to name each shape.
+
+### 3.4 Process the CSV file
+
+Each line of the CSV is processed using the following code block:
+
+```python
+    #Iterate over each row in the CSV file
+    #   Skip the header row
+    #   Don't read more than the max number of elements
+    #   Create the shape with the appropriate color at each coordinate
+    for row in itertools.islice(csvReader, 1, self.maxElements):
+        name = row[0]
+        x = float(row[1])
+        y = float(row[2])
+        z = float(row[3])
+        cluster = row[4]
+```
+
+In the first statement, the `itertools` module is used to process only the correct rows. `islice()` will take rows from `csvReader` starting at the index of 1 (this skips the header) and until the end of the list or `self.maxElements`, whichever comes first.
+
+The next few statements retrieve the name, coordinates, and cluster number from the given row.
+
+If you would like to print out information as it runs in order to debug the code, you could add the following code:
+
+```python
+    carb.log_warn(f"X: {x} Y: {y} Z: {z}")
+```
+
+This would print the coordinates from each row to the console. Remove those lines after validating that reading was successfull - no need to keep that kind of debugging in the final code.
+
+## 4. Create each shape
+
+This section will go through the creation of each shape at the correct location in the correct color.
+
+### 4.1 Determine the Prim Path
+
+The prim path is determined using the following code: 
+
+```python
+    # root prim
+    primClusterUrl = self.rootUrl
+
+    # add group to path if the user has selected that option
+    if self.groupByCluster:                    
+        primClusterUrl += self.clusterLayerRoot + cluster
+    
+    primCluster = stage.GetPrimAtPath(primClusterUrl)
+
+    #create the prim if it does not exist
+    if not primCluster.IsValid():
+        UsdGeom.Xform.Define(stage, primClusterUrl)
+        
+    shapeUrl = primClusterUrl + '/box_%d' % i
+    i += 1
+```
+
+First, all prims share the same root url so the path is made with the url. Second, if the user has selected to have the prims grouped, a group is added to the end of the url. Next, if that cluster does not exist yet it is created. Finally, the name of the individual prim is appended to the end of the path and the iterator is incremented.
+
+In the code above, prims are grouped if the user has selected the grouping option. Imagine that the `cluster` refers to the type of object (ie. `cluster 6` refers to `street lights` and `cluster 29` to mail boxes). In that situation grouping can be very useful because Instead of selecting each `street light` one by one in the stage scene, their group can be selected instead. This would let a user easily hide/show the entire group or edit the group in some other way.
+
+<p align="center">
+    <img width="75%" src="images/TheMagicEye.png">
+<p>
+
+### 4.2 Insert a Reference Prim
+
+When working with USD scene composition, using a _reference_ is helps with performance. References can be read about in the [USD Glossary](https://graphics.pixar.com/usd/docs/USD-Glossary.html#USDGlossary-References).
+
+Here, instead of creating one prim per line in the CSV, a single prim is created and then a reference to that shape is made for each line in the CSV. This has several benefits:
+
+1. If the referred shape is changed, all elements would also change.
+2. The references are quicker to create than new shapes
+3. If saved, the output file will be smaller
+
+This is done with the following code:
+
+```python
+    #Create reference prim
+    refShape = stage.OverridePrim(shapeUrl)
+
+    #Create instance to reference prim
+    refShape.GetReferences().AddReference(str(self.ShapeFilePath), '/MyRef/RefMesh')
+```
+
+Here the reference is created and then used.
+
+### 4.3 Set the Position of the Prim
+
+Next, the position of the prim is set as follows:
+
+```python
+    #Get mesh from shape instance
+    nextShape = UsdGeom.Mesh.Get(stage, shapeUrl)
+
+    #Set location
+    nextShape.AddTranslateOp().Set(
+        Gf.Vec3f(
+            self.scaleDataConverter*x, 
+            self.scaleDataConverter*y,
+            self.scaleDataConverter*z))
+```
+
+In the first statement, a reference to the reference's mesh is assigned to the `nextShape` property and in the next statement it is transformed according to the data read from the CSV file. Note that each is scaled by a constant value. This is simply because the shapes are large relative to the values of in the CSV file and so the translations are scaled up until the shapes are separated by a resonable amount of space.
+
+### 4.4 Color the Shapes
+
+Finally, the shapes are collored with this code: 
+
+```python
+    #Set Color
+    nextShape.GetDisplayColorAttr().Set(
+        categoryColors[int(cluster) % self.maxNumberOfCluster])
+```
+
+Here, the color display attribute is set on each prim according to its cluster attribute read from the CSV file.
+
+## 5. Conclusions
+
+The final result should match the block below:
+
+```python
+    def Generate(self):
+        
         # Clear the stage
         stage = omni.usd.get_context().get_stage()
         primRoot = stage.GetPrimAtPath(self.rootUrl)
@@ -150,34 +401,8 @@ The routine below present the different steps.
         newLight.CreateAngleAttr(0.53)
         newLight.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
         newLight.CreateIntensityAttr(5000.0)
-```  
-### 2.2 : Practice
-**TODO:** replace that code in the right section (only the big routine decribed above - the first 2 code lines, namely `SetStageUpAxis` and `SetStageMetersPerUnit` are only there for information, and already defined in the routine section), of `Generate()`.
 
-
-## 3. Opening CSV file
-### 3.1 : Format of one CSV File
-CSV Files are common file format used by Data-scientists to store data, for various and heterogenous purposes.
-
-
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/CSV_Sample_both.png">
-<p>
-
-the structure of such a file is:
-- the first line, or _header_, contains the names of the different fields.
-- the following lines contain the values for each column, representing one 'element' per line.
-
-To open and read one CSV file, we do rely on the Python’s inbuilt module called [**_csv_**](https://docs.python.org/3/library/csv.html) and in particular the _csv.reader_ object; this is combined with  `open()` (to open the file), `cvs.reader()` to read the file with as argument `delimiter` that specifies the character used to separate each field. 
-
-### 3.2 : Practice
-**TODO:** The routine in  `Generate()` is the one below. Now, knowing that our CSV file is made of:
-- first line : the _header_, only fields name - not to be taken into account, starting then the loop from 1!
-- 5 columns associated to the fields
-- plenty of filled lines
-
-
-```python
+        # check that CSV exists
         if os.path.exists(self.CSVFilePath):
             # Read CSV file
             with open(self.CSVFilePath, newline='') as csvfile:
@@ -187,71 +412,19 @@ To open and read one CSV file, we do rely on the Python’s inbuilt module calle
                 #   Skip the header row
                 #   Don't read more than the max number of elements
                 #   Create the shape with the appropriate color at each coordinate
-                for row in itertools.islice(csvReader, TO_REPLACE, self.maxElements):
-                    name = row[TO_REPLACE]
-                    x = float(row[TO_REPLACE])
-                    y = float(row[TO_REPLACE])
-                    z = float(row[TO_REPLACE])
-                    cluster = row[TO_REPLACE]
-``` 
-
-Please replace the **TO_REPLACE** with the proper values (the position in the CSV row) to match our expectation, taking into account our CSV format. When found, paste that one section after the creation of the stage.
-
-Afterwards, please try running `Generate()` on pressing the button named similarly in the **UI**.
-
-In case you would like to get confirmation it is working, and taking benefits of some _debug_ features of OV, you could add:
-
-```python
-                    carb.log_warn(f"X: {x} Y: {y} Z: {z}")
-                    i += 1
-``` 
-
-and look at what is displayed on the console. Now remove those lines after validating reading was successfull - no need to keep that kind of debugging afterwards.
-
-<details>
-<summary>Solution</summary>
-TO_REPLACE with...:
-
-    for row in itertools.islice(csvReader, 1, self.maxElements):
+                for row in itertools.islice(csvReader, 1, self.maxElements):
                     name = row[0]
                     x = float(row[1])
                     y = float(row[2])
                     z = float(row[3])
                     cluster = row[4]
-
-</details>   
- 
-
-## 4. Displaying a shape at X, Y, Z + Colors
-### 4.1 : Placing at X, Y and Z...
-When working with USD scene composition, using _reference_ is one basic and usefull API. 
-
-From the [USD Glossary](https://graphics.pixar.com/usd/docs/USD-Glossary.html#USDGlossary-References): 
->_"The primary use for References is to compose smaller units of scene description into larger *aggregates*, 
-building up a namespace that includes the \"encapsulated\" result of composing the scene description targeted by a reference._"
-
-The idea in our project is that instead of creating one prim per objects (which can be numerous, depending on the size of the CSV file), 
-we do use the tool of using reference such that every displayed object is _based_ on the same shape. 
-Benefits are several:
-1. if the referred shape is changed, all elements would as well (sometimes we may prefer to have cubes, some other times sphere)
-2. reducing the load of the scene - if saved, the output file (as _usd_ or _usda_) will be smaller
-
-### 4.2 : Practice
-Afterwards, in order to differentiate the objects, our algorithm place at different locations and change the color of the elements depending on their class (the column _cluster_ in our CSV file sample)
-
-The steps are:
-1. Create a place for the reference to live
-2. Create the reference
-3. create a new prim that refers to
-4. optional: override/set color, position, scale, etc...
-
-
-```python
+                    
                     # root prim
                     primClusterUrl = self.rootUrl
 
                     # add group to path if the user has selected that option
-                    # FOR GROUPING PER COLOR
+                    if self.groupByCluster:                    
+                        primClusterUrl += self.clusterLayerRoot + cluster
                     
                     primCluster = stage.GetPrimAtPath(primClusterUrl)
 
@@ -262,7 +435,7 @@ The steps are:
                     shapeUrl = primClusterUrl + '/box_%d' % i
                     i += 1
 
-                    #Create first reference prim
+                    #Create reference prim
                     refShape = stage.OverridePrim(shapeUrl)
 
                     #Create instance to reference prim
@@ -274,187 +447,13 @@ The steps are:
                     #Set location
                     nextShape.AddTranslateOp().Set(
                         Gf.Vec3f(
-                            TO_REPLACE, 
-                            TO_REPLACE,
-                            TO_REPLACE))
+                            self.scaleDataConverter*x, 
+                            self.scaleDataConverter*y,
+                            self.scaleDataConverter*z))
 
                     #Set Color
-                    # FOR NEXT STEP COLOR
-``` 
+                    nextShape.GetDisplayColorAttr().Set(
+                        categoryColors[int(cluster) % self.maxNumberOfCluster])   
+```
 
-**TODO:** Copy the routine displayed above, and place it at the right location in `Generate()`. But do change the **TO_REPLACE** instances with the right values (they represent the position retrieved from the CSV file).
-
-One add-on/idea: make use of the member _self.scaleDataConverter_ to display the objects at a more suitable position...
-and why so? Any idea?
-    
-<details>
-<summary>Solution (Basic)</summary>
-In the code replace <code> #Set location</code>, with<br>
-
-    #Set location
-    nextShape.AddTranslateOp().Set(
-              Gf.Vec3f(
-                x, 
-                y,
-                z))   
-
-</details>
-
-**!!!Slightly Filled in the Room!!!** and quite drabbed color... :smile:
-
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/SlightlyFilledInTheRoom.png">
-<p>
-    
-<details>
-<summary>Solution ...with taking into account _unit/scale_</summary>
-In the code replace <code> #Set location</code>, with<br>
-
-    #Set location
-    nextShape.AddTranslateOp().Set(
-              Gf.Vec3f(
-                self.scaleDataConverter*x, 
-                self.scaleDataConverter*y,
-                self.scaleDataConverter*z))   
-
-</details>
-
-
-### 4.3 :...and now changing the color
-As you notice, we do use `AddTranslateOp().Set` that we associate to the 
-shape `nextShape` currently being created.
-
-But if we would like as well to change the color of this one?
-
-
-### 4.4 : Practice
-
-**TODO 1:** try adding _nextShape.GetDisplayColorAttr().Set([(1, 0, 0)])_ ...where? and what's the result?
-
-Something like this?
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/AllRed.png">
-<p>
-
-**TODO 2:** change _[(1, 0, 0)]_ into _categoryColors[int(cluster) % self.maxNumberOfCluster]_
-    
-target of this line : changing the color accordingly to the _cluster_ value the object belongs to. 
-    
-<details>
-<summary>Solution</summary>
-In the code replace <code> # FOR NEXT STEP COLOR</code>, with<br>
-
-    nextShape.GetDisplayColorAttr().Set(
-             categoryColors[int(cluster) % self.maxNumberOfCluster])     
-
-</details>
-
-The origin of using _maxNumberOfCluster_ is that elements are grouped per class and we do want to limit the number of different colors so to have a better understanding of what is displayed (avoiding displaying one rainbow :rainbow: )
-...but that is not necessary and would depend on the use case/target (and therefore a member parameter that can/could be changed.)
-
-> 📝 [for more information about `GetDisplayColorAttr()`](https://graphics.pixar.com/usd/release/api/class_usd_geom_gprim.html)
-
-
-## 5. Grouping by class
-### 5.1 : Why Grouping?
-Why not? :wink:
-
-In our current approach, based on our CSV sample, we thought about the fact that sometimes you may want to regroup the generated objects per class so as to more easily handle them afterwards.
-
-let's imagine that the _cluster_ or _class_ topic refers to object of one certain type (_cluster_ 6 refers to _street lights_ and _cluster_ 29 to mail boxes...our CSV is about the positions of street's elements in one town, as an example). Then after displaying the shapes, someone would like to see only the mail boxes. Instead of selecting one by one in the stage scene, we can then select a _group_ and hide/show it easily thanks to the _eye icon_
-
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/TheMagicEye.png">
-<p>
-
-### 5.2 : Practice - How to do it.
-Our class contains one member for that, namely _self.groupByCluster_. If you look at the **UI** of this extension, you can notice one checkbox to activate/deactivate such process of grouping. 
-
-For what is behind the checkbox, you can have a look at the functions : 
-* in _views.py_
-```python
-    ChoiceCheckBoxWithClass = ui.CheckBox(width=20) 
-``` 
-* and in _models.py_
-```python
-     def GroupByClusterChanged(self, _bool_checkboxVal_ClassGroup_):
-``` 
-Now to make it happen, just remember that USD is one extensible scene description, and as such, we can define some _structure_. 
-
-Hence, in our case, we want, if activated, to group objects per class (the _cluster_ field of the CSV file).
-
-**TODO:** with the 4 following hints, try to recreate the 2/3 lines of code that will make it happen.
-the hints:
-* _self.groupByCluster_ : is one _bool_ variable.
-*  _primClusterUrl_ : is the _position_ where to add the generated _nextShape_
-* when not grouped, _primClusterUrl = self.rootUrl_ is the _position_
-* _self.clusterLayerRoot_ : is set as **_/Class__** (member of the class of our extension)
-* from the CSV file, we do retrieve the current _cluster_ value
-
-<details>
-<summary>Solution</summary>
-In the code replace <code># FOR GROUPING PER COLOR</code>, with<br>
-
-    if self.groupByCluster:                    
-           primClusterUrl += self.clusterLayerRoot + cluster
-
-</details>
-
-**EXPECTED RESULTS:**
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/WithGrouping.png">
-<p>
-
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_WhatToExpect.png">
-<p>
-
-
-## 6. CHALLENGES
-### 6.1 : bringing a third ref shape
-If you look in the _data_ folder, we added a third one, namely _BasicQuadAsRef.usda_. The shape is not necessarily one good representative (flat surface), but depending on the target of why reading the CSV file, it can make sense.
-
-Hence the challenge, if you accept, is:
-- in _models.py_ : add one new shape in the list of potential shapes.
-- in _views.py_ : change the _ComboBox_ and add the possibility to select that quad shape.
-
-try it out by yourself.
-
-### 6.2 : Changing the size of the shape
-While so far we changed the position and the color of an object, we would like to alter as well the size/scale of it.
-
-One Hint: if to change the position (_Add a Translate_) we use `nextShape.AddTranslateOp().Set` , what do you think would be the solution to _Add a Rotation_?
-
-> 📝 **Beware** of Transformations: USD uses the [UsdGeomXFormable](https://graphics.pixar.com/usd/release/api/class_usd_geom_xformable.html) schema. If you start looking deeper in it, you will notice that order of operations may differ from oneused _schemas_ to the other (example : SRT for Scale-Rotate-Translate...but can be different depending on...)
-
-
-**MIXING a bit of Everything :**
-<p align="center">
-    <img src="https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/OV_CSVReader_MixOfAllpng.png">
-<p>
-
-
-## 7. Discussion
-### CSV extensive format:
-As presented, our CSV sample files contain 5 columns, including the _X_,_Y_,_Z_ and _cluster_ values...now CSV files may have
-a bigger number of fields.
-
-The challenge/question : how would you improve the current extension to handle any kind of CSV structures (we may imagine that
-there are mandatory fields! - prerequisite of the extension V2.0)
-
-### Scale and Units
-As mentionned, CSV files are widely used to store any kind of data, of heteregenous nature.
-
-Imagine you would like to display all the mail boxes and street lights of one town, the unit could be in meter. 
-
-But then working on a CSV file displaying all the train stations located in Europe, you may tend to think that information would be given in km.
-
-And then the challenge/question : how to display it in one 3D scene that would make sense? keep the unit of the stage as meters and deal with it, even though you may display elements thousands of units away?
-
-#### Adding MetaData/Some text
-how nice would it be to be able to display billboards, linked to objects, that would be shown when clicking on one of those latter !!!
-
-## 7. Congratulations!!
-Great job getting through this tutorial. Interested in improving your skills further? Interested in the presentating your version?
-
-Challenge...Accepted...? :star:
+This tutorial has demonstrated how to read a CSV file and use its data to place shapes in a scene. Rather than place many unique shapes, the tutorial used references to place copies of the same shape in an efficient way. The shapes were located and colored based on data in the CSV file.
