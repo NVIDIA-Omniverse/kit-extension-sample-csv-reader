@@ -1,24 +1,24 @@
 ![](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/raw/main/tutorial/images/logo.png)
 
-# Create One CVS Reader with Omniverse Kit Extensions
+# Create a CVS Reader with Omniverse Kit Extensions
 
 **CSV** File, or **C**omma **S**eparated **V**alues, is the simplest form for storing data/information separated by commas. You can learn more about them in this [Wikipedia article](https://en.wikipedia.org/wiki/Comma-separated_values).
 CSV files are commonly used to exchange data of various type and are broadly used. For example: 
 
 - the position of radio antennas and their types spread accross one town/region
-- the position of hotels in Paris and their grade,
+- the position of hotels in Paris and their grade
 
-In this case the CSV file contains X,Y,Z information about the position of
-some elements to be placed in a 3D environment, as well as a cluster column (representing some extra info), that will be used color the elements by group.
+In this case the CSV file contains X, Y, Z information about the position of
+some elements to be placed in a 3D environment, as well as a cluster column (representing some extra info), that will be used to color the elements by group.
 
 ## Learning Objectives
 
 In this guide, you learn how to:
 
 - Open a CSV file and read it
-- Place one shape at an X,Y,Z position given by the CSV File
-- Create USD references for the shapes to save resources
-- Color the shapes based on data retrieved from the CSV file
+- Place a prim at an X, Y, Z position given by the CSV File
+- Create USD references for the prims
+- Color the prims based on data retrieved from the CSV file
 
 <p align="center">
     <img width=75% src="images/OV_CSVReader_WhatToExpect.png">
@@ -29,61 +29,25 @@ In this guide, you learn how to:
 - Omniverse Code 2022.1 or above
 - [Omniverse compatible GPU](https://docs.omniverse.nvidia.com/app_view/common/technical-requirements.html)
 - Working knowledge of Python
-- Working knowledge of USD in particular the notion of reference API
+- Working knowledge of USD in particular the notion of references
   - [PIXAR USD Tutorial referencing](https://graphics.pixar.com/usd/release/tut_referencing_layers.html)
   - [NVIDIA Developer page](https://developer.nvidia.com/usd/tutorials)
   - [NVIDIA DLI Course](https://courses.nvidia.com/courses/course-v1:DLI+S-FX-02+V1/)
 - [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)
 
-## Table of Contents
-
-1. [Download the Starter Project](#1-download-the-starter-project)
-
-    1.1 [Load the Extension](#11-load-the-extension)
-
-    1.2 [Load the Extension](#11-load-the-extension)
-
-2. [](#2-prepare-the-stage)
-
-    2.1 [Clear the Stage](#21-clear-the-stage)
-
-    2.2 [Create a New Stage](#22-create-a-new-stage)
-
-    2.3 [Set Stage Parameters](#23-set-stage-parameters)
-
-    2.4 [Add a Light](#24-add-a-light)
-
-3. [CSV File](#3-csv-file)
-
-    3.1 [CSV File Format](#31-csv-file-format)
-
-    3.2 [Check that the File Exists](#32-check-that-the-file-exists)
-
-    3.3 [Read the CSV File](#33-read-the-csv-file)
-
-    3.4 [Process the CSV File](#34-process-the-csv-file)
-
-4. [Create Each Shape](#4-create-each-shape)
-
-    4.1 [Determine the Prim Path](#41-determine-the-prim-path)
-
-    4.2 [Insert a Reference Prim](#42-insert-a-reference-prim)
-
-    4.3 [Set the Position of the Prim](#43-set-the-position-of-the-prim)
-
-    4.4 [Color the Shapes](#44-color-the-shapes)
-
-5. [Conclusions](#5-conclusions)
-
 ## 1. Download the Starter Project
 
-To get the assets for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-reader` [KitExtCSVReader](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader).
+To get the starting code for this hands-on lab, please clone the `tutorial-start` branch of `kit-extension-sample-csv-reader` [github repository](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader/tree/tutorial-start).
 
-`git clone -b tutorial-start [https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git](https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git)'
+```shell
+git clone -b tutorial-start https://github.com/NVIDIA-Omniverse/kit-extension-sample-csv-reader.git
+```
+
+This repository contains the assets you use in this tutorial
 
 ## 1.1 Load the Extension
 
-In the extension tab, click on the **gear wheel**. Next, in the **extension search path**, add the path to the `exts` sub-folder where you cloned the git repository. Then, search for **CSV** in the extension tab, and enable the extension by clicking on its toggle button.
+In the _Extensions_ tab, click on the **gear wheel**. Next, in the **extension search path**, add the path to the `exts` sub-folder where you cloned the git repository. Then, search for **CSV** in the _Extensions_ tab, and enable the extension by clicking on its toggle button.
 
 <p align="center">
     <img width="75%" src="images/LoadExt.png">
@@ -151,7 +115,7 @@ This section demonstrates how to prepare a stage for shapes to be imported from 
 
 ### 2.1 Clear the Stage
 
-The first step is to clear the stage in order to remove any data from previous imports. This is done with the following code:
+The first step is to clear the stage in order to remove any data from previous runs of this tool. This is done with the following code:
 
 ```python
         # Clear the stage
@@ -161,7 +125,7 @@ The first step is to clear the stage in order to remove any data from previous i
             stage.RemovePrim(self.rootUrl)
 ```
 
-The first statement gets a reference to the current stage. The second statement gets a reference to the root prim, and if that prim is valid it is cleared.
+The first statement gets the current stage. The second statement gets te prim path to the root prim, and if that prim is valid it is cleared.
 
 ### 2.2 Create a New Stage
 
@@ -176,7 +140,7 @@ Next a new stage is created with the following statements:
         stage = omni.usd.get_context().get_stage()
 ```
 
-Here a new stage is created. If that fails a warning is issued and `Generate()` returns. Otherwise, the new stage is retrieved to be used moving forward.
+Here a new stage is created. If that fails a warning is issued and `Generate()` returns. Otherwise, the new stage is used going forward.
 
 ### 2.3 Set Stage Parameters
 
@@ -194,7 +158,7 @@ Then, the parameters for the stage are set with the statements below:
         stage.SetDefaultPrim(rootPrim)
 ```
 
-In these statements, the `y` axis is set to up, the stage units are set to meters, the root prim is set and the root prim is set to default. These steps are all necessary so that when we import shapes from a CSV file they have the up-direction we expect, are the correct size, and are added to the correct location within the stage tree.
+In these statements, the `y` axis is set to up, the stage units are set to meters, the root prim is set as the default prim. These steps are all necessary so that when we import shapes from a CSV file they have the up-direction we expect, are the correct size, and are added to the correct location within the stage tree.
 
 ### 2.4 Add a light
 
@@ -239,7 +203,7 @@ If the file exists, then continue. If not, gracefully exit the routine and prefe
 
 ### 3.3 Read the CSV file
 
-To open and read one CSV file, use Python’s inbuilt [**_csv_**](https://docs.python.org/3/library/csv.html) module ad demonstrated in the following snippet:
+To open and read a CSV file, use Python’s built-in [**_csv_**](https://docs.python.org/3/library/csv.html) module as demonstrated in the following snippet:
 
 ```python
     # Read CSV file
@@ -305,7 +269,7 @@ The prim path is determined using the following code:
     i += 1
 ```
 
-First, all prims share the same root url so the path is made with the url. Second, if the user has selected to have the prims grouped, a group is added to the end of the url. Next, if that cluster does not exist yet it is created. Finally, the name of the individual prim is appended to the end of the path and the iterator is incremented.
+First, all prims share the same root so the path of each shape prim is create using the root prim's path. Second, if the user has selected to have the prims grouped, a group is appended to the path. Next, if that cluster does not exist yet it is created. Finally, the name of the individual prim is appended to the end of the path and the iterator is incremented.
 
 In the code above, prims are grouped if the user has selected the grouping option. Imagine that the `cluster` refers to the type of object (ie. `cluster 6` refers to `street lights` and `cluster 29` to mail boxes). In that situation grouping can be very useful because Instead of selecting each `street light` one by one in the stage scene, their group can be selected instead. This would let a user easily hide/show the entire group or edit the group in some other way.
 
