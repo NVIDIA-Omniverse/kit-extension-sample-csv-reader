@@ -32,9 +32,7 @@
 #
 ###############################################################################
 import carb
-# Omni imports
 import omni.ext
-# styles
 from .models import MainModel
 from .views import MainView
 
@@ -47,11 +45,11 @@ class MyExtension(omni.ext.IExt):
     # this extension is located on filesystem.
 
     def on_startup(self, ext_id):
-        carb.log_warn(f"[CSV_Reader] MyExtension startup")
+        carb.log_info(f"[CSV_Reader] MyExtension startup")
         Model = MainModel()
         self._window = MainView(Model)
 
     def on_shutdown(self):
+        carb.log_info(f"[CSV_Reader] MyExtension shutdown")
         self._window.destroy()
-        self._window = None
-        carb.log_warn(f"[CSV_Reader] MyExtension shutdown")
+        self._window = None        

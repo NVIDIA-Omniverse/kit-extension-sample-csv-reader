@@ -12,12 +12,11 @@ from pxr import Gf, UsdGeom, UsdLux
 import omni.client
 import omni.kit.app
 from omni.kit.window.file_importer import get_file_importer
-from omni.kit.window import file_importer
 
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.parent.parent.parent.joinpath("data")
 
-categoryColors = {
+category_colors = {
     0: [(1, 0, 0)],
     1: [(0, 1, 0)],
     2: [(0, 0.4, 0)],
@@ -31,7 +30,7 @@ categoryColors = {
     10: [(1, 1, 1)],
 }
 
-shapeUSDAName = {
+shape_usda_name = {
     "cube": "BasicCubeAsRef.usda",
     "sphere": "BasicSphereAsRef.usda",
 }
@@ -41,74 +40,68 @@ class MainModel():
     def __init__(self):
         
         #root prim paths
-        self.rootUrl = '/World'
-        self.clusterLayerRoot = '/Class_'
+        self.root_path = '/World'
+        self.cluster_layer_root_path = '/Class_'
         
         # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
 
         # Default CSV Path (sample file deployed with extension)
-        self.CSVFilePath = DATA_PATH.joinpath('CSVSample.csv')
+        self.csv_file_path = DATA_PATH.joinpath('CSVSample.csv')
         
         # path to basic shape
-        self.shapeFileName = "BasicCubeAsRef.usda"
-        self.ShapeFilePath = DATA_PATH.joinpath(self.shapeFileName)
+        self.shape_file_name = "BasicCubeAsRef.usda"
+        self.shape_file_path = DATA_PATH.joinpath(self.shape_file_name)
         
         # Scale factor so that the shapes are well spaced
-        self.scaleDataConverter = 100.0
+        self.scale_factor = 100.0
 
-        # limit the number of elts read
-        self.maxElements = 5000
+        # limit the number of rows read
+        self.max_elements = 5000
         
         # whether or not the shapes should be grouped by cluster
-        self.groupByCluster = False
+        self.group_by_cluster = False
 
         #  max number of different color clusters
-        self.maxNumberOfCluster = 10
+        self.max_num_clusters = 10
 
-    def Generate(self):
-        
+    def generate(self):
         # Clear the stage
         stage = omni.usd.get_context().get_stage()
-        primRoot = stage.GetPrimAtPath(self.rootUrl)
-        if (primRoot.IsValid()):
-            stage.RemovePrim(self.rootUrl)
+        root_prim = stage.GetPrimAtPath(self.root_path)
+        if (root_prim.IsValid()):
+            stage.RemovePrim(self.root_path)
 
         # create a new stage with Y up and in meters
         if omni.usd.get_context().new_stage() is False:
-            carb.log_warn(f"failing creating a new stage")
-            return None
+            carb.log_warn(f"Failed creating a new stage.")
+            return
                 
         stage = omni.usd.get_context().get_stage()
         #  set the up axis
         UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
         #  set the unit of the world
         UsdGeom.SetStageMetersPerUnit(stage, self.stage_unit_per_meter)
-        # define the root prim
-        stage.DefinePrim(self.rootUrl)
-        # Define the root prim as the default
-        rootPrim = stage.GetPrimAtPath(self.rootUrl)
-        stage.SetDefaultPrim(rootPrim)
+        stage.SetDefaultPrim(root_prim)
 
         # add a light
-        stage = omni.usd.get_context().get_stage()
-        LightUrl = self.rootUrl + '/DistantLight'
-        newLight = UsdLux.DistantLight.Define(stage, LightUrl)
-        newLight.CreateAngleAttr(0.53)
-        newLight.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        newLight.CreateIntensityAttr(5000.0)
+        light_prim_path = self.root_path + '/DistantLight'
+        light_prim = UsdLux.DistantLight.Define(stage, light_prim_path)
+        light_prim.CreateAngleAttr(0.53)
+        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        light_prim.CreateIntensityAttr(5000.0)
 
         # check that CSV exists
-        if os.path.exists(self.CSVFilePath):
+        if os.path.exists(self.csv_file_path):
             # Read CSV file
-            with open(self.CSVFilePath, newline='') as csvfile:
-                csvReader = csv.reader(csvfile, delimiter=',')
+            with open(self.csv_file_path, newline='') as csvfile:
+                csv_reader = csv.reader(csvfile, delimiter=',')
                 i = 1
-                #Iterate over each row in the CSV file
+                # Iterate over each row in the CSV file
                 #   Skip the header row
                 #   Don't read more than the max number of elements
                 #   Create the shape with the appropriate color at each coordinate
-                for row in itertools.islice(csvReader, 1, self.maxElements):
+                for row in itertools.islice(csv_reader, 1, self.max_elements):
                     name = row[0]
                     x = float(row[1])
                     y = float(row[2])
@@ -116,53 +109,53 @@ class MainModel():
                     cluster = row[4]
                     
                     # root prim
-                    primClusterUrl = self.rootUrl
+                    cluster_prim_path = self.root_path
 
                     # add group to path if the user has selected that option
-                    if self.groupByCluster:                    
-                        primClusterUrl += self.clusterLayerRoot + cluster
+                    if self.group_by_cluster:                    
+                        cluster_prim_path += self.cluster_layer_root_path + cluster
                     
-                    primCluster = stage.GetPrimAtPath(primClusterUrl)
+                    cluster_prim = stage.GetPrimAtPath(cluster_prim_path)
 
-                    #create the prim if it does not exist
-                    if not primCluster.IsValid():
-                        UsdGeom.Xform.Define(stage, primClusterUrl)
+                    # create the prim if it does not exist
+                    if not cluster_prim.IsValid():
+                        UsdGeom.Xform.Define(stage, cluster_prim_path)
                         
-                    shapeUrl = primClusterUrl + '/box_%d' % i
+                    shape_prim_path = cluster_prim_path + '/box_%d' % i
                     i += 1
 
-                    #Create reference prim
-                    refShape = stage.OverridePrim(shapeUrl)
+                    # Create prim to add the reference to.
+                    ref_shape = stage.OverridePrim(shape_prim_path)
 
-                    #Create instance to reference prim
-                    refShape.GetReferences().AddReference(str(self.ShapeFilePath), '/MyRef/RefMesh')
+                    # Add the reference
+                    ref_shape.GetReferences().AddReference(str(self.shape_file_path), '/MyRef/RefMesh')
                                     
-                    #Get mesh from shape instance
-                    nextShape = UsdGeom.Mesh.Get(stage, shapeUrl)
+                    # Get mesh from shape instance
+                    next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
 
-                    #Set location
-                    nextShape.AddTranslateOp().Set(
+                    # Set location
+                    next_shape.AddTranslateOp().Set(
                         Gf.Vec3f(
-                            self.scaleDataConverter*x, 
-                            self.scaleDataConverter*y,
-                            self.scaleDataConverter*z))
+                            self.scale_factor*x, 
+                            self.scale_factor*y,
+                            self.scale_factor*z))
 
-                    #Set Color
-                    nextShape.GetDisplayColorAttr().Set(
-                        categoryColors[int(cluster) % self.maxNumberOfCluster])                  
+                    # Set Color
+                    next_shape.GetDisplayColorAttr().Set(
+                        category_colors[int(cluster) % self.max_num_clusters])                  
             
     # Handles the change between a cube and sphere shape in the UI
-    def ShapeChanged(self, _comboVal_ShapeDefaultAsRef):
-        key_list_shape = list(shapeUSDAName)
-        self.shapeFileName = shapeUSDAName[key_list_shape[_comboVal_ShapeDefaultAsRef]]
-        self.ShapeFilePath = DATA_PATH.joinpath(self.shapeFileName)
+    def shape_changed(self, choice):
+        chosen_key = list(shape_usda_name.keys())[choice]
+        self.shape_file_name = shape_usda_name[chosen_key]
+        self.shape_file_path = DATA_PATH.joinpath(self.shape_file_name)
 
     # Handles the change of the 'group by cluster' checkbox
-    def GroupByClusterChanged(self, _bool_checkboxVal_ClassGroup_):
-        self.groupByCluster = _bool_checkboxVal_ClassGroup_
+    def group_by_cluster_changed(self, do_clustering):
+        self.group_by_cluster = do_clustering
     
     # Handles the click of the Load button
-    def SelectFile(self):
+    def select_file(self):
         self.file_importer = get_file_importer()
         self.file_importer.show_window(
             title="Select a CSV File",
@@ -187,7 +180,7 @@ class MainModel():
         else:
             fullpath = filename
 
-        self.CSVFilePath = fullpath
+        self.csv_file_path = fullpath
         self.csv_field_model.set_value(str(fullpath))
 
     # Handles the filtering of files within the file importer dialog
