@@ -4,8 +4,8 @@
 
 ## Overview
 
-The CSV Reader extension offers the possibility for users to populate with some default shapes (Cubes or Spheres) the scene, at locations X,Y,Z found in the CSV file.
-Besides, colors are added depending on the _cluster_ values given as well in the CSV file.
+The CSV Reader extension offers the possibility for users to populate the scene with some default shapes (Cubes or Spheres) at locations X, Y, Z found in the CSV file.
+Colors are also added depending on the _cluster_ values given as well in the CSV file.
 
 
 ## [Tutorial](../../../tutorial/tutorial.md)
@@ -17,15 +17,14 @@ Omniverse Kit extensions. [Get started with the tutorial.](../../../tutorial/tut
 ## Usage
 
 ### Prerequisites :
-1) CSV Files place : either use the ones by default in the _data_ folder - or make sure to specify its place in the frame of the UI
-2) Note that the CSV file should contain X, Y, Z and cluster columns. please look at examples provided in the _data_ folder
+1) CSV Files place : either use the ones by default in the _data_ folder - or make sure to specify its place in the field of the UI
+2) Note that the CSV file should contain X, Y, Z and cluster columns. Please look at examples provided in the _data_ folder
 
 ### Workflow using the extension:
 
-click on 'Generate' -> that will create elements here and there based on the info from the CSV file
+Click on 'Generate' -> that will create elements here and there based on the info from the CSV file.
 
-NB:
-1. [opt] : in the parameters UI window, select the location of your CSV, the type of shape, and if you want to be grouped by class/_cluster_...
-2. if required : you can export/save the USD stage with the 'file->Save As...' option.
-3. the scene is reset everytime you press on Generate.
+1. [Optional] : In the parameters UI window, select the location of your CSV, the type of shape, and if you want to be grouped by class/_cluster_...
+2. If required : you can export/save the USD stage with the 'File->Save As...' option.
+3. The scene is reset every time you press on Generate.
 
