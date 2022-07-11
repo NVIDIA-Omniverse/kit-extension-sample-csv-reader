@@ -67,82 +67,40 @@ class MainModel():
 
     def generate(self):
         # Clear the stage
-        stage = omni.usd.get_context().get_stage()
-        root_prim = stage.GetPrimAtPath(self.root_path)
-        if (root_prim.IsValid()):
-            stage.RemovePrim(self.root_path)
 
         # create a new stage with Y up and in meters
-        if omni.usd.get_context().new_stage() is False:
-            carb.log_warn(f"Failed creating a new stage.")
-            return
-                
-        stage = omni.usd.get_context().get_stage()
+
         #  set the up axis
-        UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
+
         #  set the unit of the world
-        UsdGeom.SetStageMetersPerUnit(stage, self.stage_unit_per_meter)
-        stage.SetDefaultPrim(root_prim)
 
         # add a light
-        light_prim_path = self.root_path + '/DistantLight'
-        light_prim = UsdLux.DistantLight.Define(stage, light_prim_path)
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(5000.0)
 
         # check that CSV exists
-        if os.path.exists(self.csv_file_path):
+
             # Read CSV file
-            with open(self.csv_file_path, newline='') as csvfile:
-                csv_reader = csv.reader(csvfile, delimiter=',')
-                i = 1
+
                 # Iterate over each row in the CSV file
                 #   Skip the header row
                 #   Don't read more than the max number of elements
                 #   Create the shape with the appropriate color at each coordinate
-                for row in itertools.islice(csv_reader, 1, self.max_elements):
-                    name = row[0]
-                    x = float(row[1])
-                    y = float(row[2])
-                    z = float(row[3])
-                    cluster = row[4]
                     
                     # root prim
-                    cluster_prim_path = self.root_path
 
                     # add group to path if the user has selected that option
-                    if self.group_by_cluster:                    
-                        cluster_prim_path += self.cluster_layer_root_path + cluster
-                    
-                    cluster_prim = stage.GetPrimAtPath(cluster_prim_path)
 
                     # create the prim if it does not exist
-                    if not cluster_prim.IsValid():
-                        UsdGeom.Xform.Define(stage, cluster_prim_path)
-                        
-                    shape_prim_path = cluster_prim_path + '/box_%d' % i
-                    i += 1
 
                     # Create prim to add the reference to.
-                    ref_shape = stage.OverridePrim(shape_prim_path)
 
                     # Add the reference
-                    ref_shape.GetReferences().AddReference(str(self.shape_file_path), '/MyRef/RefMesh')
                                     
                     # Get mesh from shape instance
-                    next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
 
                     # Set location
-                    next_shape.AddTranslateOp().Set(
-                        Gf.Vec3f(
-                            self.scale_factor*x, 
-                            self.scale_factor*y,
-                            self.scale_factor*z))
 
                     # Set Color
-                    next_shape.GetDisplayColorAttr().Set(
-                        category_colors[int(cluster) % self.max_num_clusters])                  
+        pass          
             
     # Handles the change between a cube and sphere shape in the UI
     def shape_changed(self, choice):
