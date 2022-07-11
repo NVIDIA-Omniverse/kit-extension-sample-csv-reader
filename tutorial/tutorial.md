@@ -46,7 +46,7 @@ git clone -b tutorial-start https://github.com/NVIDIA-Omniverse/kit-extension-sa
 
 This repository contains the assets you use in this tutorial.
 
-## Step 1.1: Load the Extension
+### Step 1.1: Load the Extension
 
 In the _Extensions_ tab, click on the **gear**. Next, in the **extension search path**, add the path to the `exts` sub-folder where you cloned the git repository. Then, search for **CSV** in the _Extensions_ tab, and enable the extension by clicking on its toggle button.
 
@@ -56,56 +56,47 @@ In the _Extensions_ tab, click on the **gear**. Next, in the **extension search 
 
 To learn more about the other files in the repository, please check the [Build an Omniverse Extension in less than 10 Minutes](https://www.nvidia.com/en-us/on-demand/session/omniverse2020-om1483/), which explains how to create on extension.
 
-## Step 1.2: Open `models.py`
+### Step 1.2: Open `models.py`
 
-This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/` directory, and in particular, on `generate()`. The starting point of `Generate()` is included below for your reference:
+This tutorial will focus on the `models.py` file found in the `exts/omni.csv.reader/omni/csv/reader/` directory, and in particular, on `generate()`. The starting point of `generate()` is included below for your reference:
 
 ```python
 def generate(self):
-            
-        # Clear the stage
+    # Clear the stage
 
-        # create a new stage with Y up and in meters
+    # create a new stage with Y up and in meters
 
-        #  set the up axis
+    #  set the up axis
 
-        #  set the unit of the world
+    #  set the unit of the world
 
-        # define the root prim
+    # add a light
 
-        # Define the root prim as the default
+    # check that CSV exists
 
-        # add a light
+        # Read CSV file
 
-        # check that CSV exists
+            # Iterate over each row in the CSV file
+            #   Skip the header row
+            #   Don't read more than the max number of elements
+            #   Create the shape with the appropriate color at each coordinate
+                
+                # root prim
 
-            # Read CSV file
+                # add group to path if the user has selected that option
 
-                #Iterate over each row in the CSV file
-                #   Skip the header row
-                #   Don't read more than the max number of elements
-                #   Create the shape with the appropriate color at each coordinate
-                    
-                    #Read data from the next row
+                # create the prim if it does not exist
 
-                    # root prim
+                # Create prim to add the reference to.
 
-                    # create the prim cluster path
+                # Add the reference
+                                
+                # Get mesh from shape instance
 
-                    # add group to path if the user has selected that option
+                # Set location
 
-                    #create the prim if it does not exist
-
-                    #Create first reference prim
-
-                    #Create instance to reference prim
-
-                    #Get mesh from shape instance
-
-                    #Set location
-                    
-                    #Set Color
-    
+                # Set Color
+    pass 
 ```
 
 > 📝 **Note:**  CSV Sample Files are provided within the _data_ folder of this extension
